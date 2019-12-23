@@ -17,14 +17,22 @@ instances = ec2.describe_instance_status(
     DryRun=False
 )
 
-result = []
-for instance in instances['InstanceStatuses']:
-    result.append(instance['InstanceId'])
+for i in instances['InstanceStatuses']:
+    print('Instance Id: ' + i['InstanceId'] + ' is located in ' + i['AvailabilityZone'] + ' and it\'s currently ' + i['InstanceState'].get('Name') + '.')
 
-# Stop all instances in a running state
-stop = ec2.stop_instances(
-    InstanceIds=result,
-    Hibernate=False,
-    DryRun=False,
-    Force=False
-)
+    if i['InstanceState'].get('Name') == 'running' == 'running':
+        result = []
+        for instance in instances['InstanceStatuses']:
+            result.append(instance['InstanceId'])
+
+        # Stop all instances in a running state
+        stop = ec2.stop_instances(
+            InstanceIds=result,
+            Hibernate=False,
+            DryRun=False,
+            Force=False
+        )
+
+        print('All instances listed has been stopped.')
+else:
+    print('No instances to stop at this time.')
