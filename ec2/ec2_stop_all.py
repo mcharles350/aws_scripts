@@ -17,6 +17,7 @@ instances = ec2.describe_instance_status(
     DryRun=False
 )
 
+# Stop all instances in a running state
 for i in instances['InstanceStatuses']:
     print('Instance Id: ' + i['InstanceId'] + ' is located in ' + i['AvailabilityZone'] + ' and it\'s currently ' + i['InstanceState'].get('Name') + '.')
 
